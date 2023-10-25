@@ -1,0 +1,55 @@
+| subject teacherSurname score output ivanovExamsAndGrades countBelow51 csvOutput xmlString|
+examsAndGrades := OrderedCollection new.
+examsAndGrades add: (Grade new subject: 'Математика'; teacherSurname: 'Іваненко'; score: 45).
+examsAndGrades add: (Grade new subject: 'Фізика'; teacherSurname: 'Іванов'; score: 34).
+examsAndGrades add: (Exam new subject: 'Логіка'; teacherSurname: 'Іванов'; score: 70; assistantSurname: 'Шевченко').
+examsAndGrades add: (Exam new subject: 'Англійська мова'; teacherSurname: 'Василенко'; score: 95; assistantSurname: 'Данилюк').
+examsAndGrades add: (Exam new subject: 'Алгоритми та структури даних'; teacherSurname: 'Степаненко'; score: 80; assistantSurname:  'Гнатюк').
+
+(examsAndGrades at:2) class.
+(examsAndGrades at:4) class.
+
+output := String streamContents: [ :stream |
+    lowestScoreExam := examsAndGrades detectMin: [ :exam | exam score ].
+    stream nextPutAll: lowestScoreExam printString; cr; class .
+
+    highestScoreExam := examsAndGrades detectMax: [ :exam | exam score ].
+    stream nextPutAll: highestScoreExam printString; cr; class .
+].
+output .
+
+ivanovExamsAndGrades := examsAndGrades select: [ :examOrGrade | examOrGrade teacherSurname = 'Іванов' ].
+countBelow51 := examsAndGrades count: [ :examOrGrade | examOrGrade score < 51 ].
+
+csvOutput := 'Subject,TeacherSurname,Score', String cr.
+examsAndGrades do: [:eachExam | 
+    csvOutput := csvOutput, eachExam subject, ',', eachExam teacherSurname, ',', eachExam score printString, String cr.
+].
+csvOutput.
+
+xml := String new writeStream.
+
+xml nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; cr.
+xml nextPutAll: '<examsAndGrades>'; cr.
+
+
+
+examsAndGrades do: [ :exam |
+    xml nextPutAll: '  <exam>'; cr.
+    xml nextPutAll: '    <subject>', exam subject, '</subject>'; cr.
+    xml nextPutAll: '    <teacherSurname>', exam teacherSurname, '</teacherSurname>'; cr.
+    xml nextPutAll: '    <score>', exam score printString, '</score>'; cr.
+    xml nextPutAll: '  </exam>'; cr.
+].
+
+xml nextPutAll: '</examsAndGrades>'.
+xml contents.
+
+'C:\\Users\\yurii\\Pharo\\PMI-pharo\\testfile.txt' asFileReference 
+    writeStreamDo: [ :stream | stream << output ].
+
+'C:\\Users\\yurii\\Pharo\\PMI-pharo\\testfile.csv' asFileReference 
+    writeStreamDo: [ :stream | stream << csvOutput  ].
+
+'C:\\Users\\yurii\\Pharo\\PMI-pharo\\testfile.xml' asFileReference 
+    writeStreamDo: [ :stream | stream nextPutAll: xml contents ].
