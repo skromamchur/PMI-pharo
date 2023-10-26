@@ -6,7 +6,7 @@ Team tasks: investigating, initial assessment
 
 ## Authors
 
-### Roman (Class Implementation)
+### Roman 
 Responsible for creating classes:
 Defining a class that models the "Exam" entity. 
 An instance of the class remembers the name of the object,
@@ -35,8 +35,8 @@ Creating a new collection containing exams from a certain teacher.
 
 ### Yurii (Examples and Data Storage)
 Responsible for creating examples with: 
-XML file.
-CSV file.
-TXT file.
+  - XML file.
+  - CSV file.
+  - TXT file.
 PostgresDB connection and populating with data, testing.
 
