@@ -33,7 +33,7 @@ Finding out how many there are debts in the collection.
 Creating a new collection containing exams from a certain teacher.
 
 
-### Yurii (Examples and Data Storage)
+### Yurii 
 Responsible for creating examples with: 
   - XML file.
   - CSV file.
